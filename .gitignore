@@ -113,7 +113,6 @@ dmypy.json
 # Pyre type checker
 .pyre/
 .idea/
-testing/
 
 run_tests.yml
 requirements-dev.txt
