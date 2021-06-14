@@ -114,7 +114,4 @@ dmypy.json
 .pyre/
 .idea/
 
-run_tests.yml
-requirements-dev.txt
-requirements.txt
 homework_01/README.md
