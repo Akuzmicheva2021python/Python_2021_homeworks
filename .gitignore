@@ -112,3 +112,10 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+.idea/
+testing/
+
+run_tests.yml
+requirements-dev.txt
+requirements.txt
+homework_01/README.md
