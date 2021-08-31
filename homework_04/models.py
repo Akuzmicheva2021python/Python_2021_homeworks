@@ -28,7 +28,8 @@ engine = create_async_engine(
         # echo=True,
         )
 
-metadata_obj = MetaData(bind=engine, schema='lesson')
+# metadata_obj = MetaData(bind=engine, schema='lesson')
+metadata_obj = MetaData(bind=engine)
 
 Base = declarative_base(bind=engine, metadata=metadata_obj)
 
