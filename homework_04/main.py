@@ -20,94 +20,60 @@ from models import *
 
 
 async def fetch_users_data() -> list:
-    users_data: List[dict] = []
+    users_data: List[User] = []
     result = await fetch_json_go(USERS_DATA_URL)
-    for user1 in result:
-        user_for_dict = dict({
-            "user_id": user1.get('id'),
-            "username": user1.get('username'),
-            "name": user1.get('name'),
-            "email": user1.get('email'),
-            "db_user_id": user1.get('id')
-            }
-        )
-        users_data.append(user_for_dict)
+    for el in result:
+        us1 = User(
+                username=el.get('username'),
+                email=el.get('email'),
+                name=el.get('name')
+                )
+        us1.id = el.get('id')
+        users_data.append(us1)
 
     return users_data
 
 
 async def fetch_post_data() -> list:
-    posts_data: List[dict] = []
+    posts_data: List[Post] = []
     result = await fetch_json_go(POSTS_DATA_URL)
-    for post1 in result:
-        post_for_dict = dict({
-            "user_id": post1.get('userId'),
-            "title": post1.get('title'),
-            "body": post1.get('body')
-            }
+    for el in result:
+        posts_data.append(
+            Post(
+                title=el.get('title'),
+                body=el.get('body'),
+                user_id=el.get('userId')
+            )
         )
-        posts_data.append(post_for_dict)
 
     return posts_data
 
 
-async def get_userid_from_username(username: String):
-    stmt = select(User).where(User.username == username)
-    result = await Session.execute(stmt)
-    user = result.scalar_one_or_none()
-    if user is None:
-        return 0
-    else:
-        return user.id
+# async def get_userid_from_username(username: String):
+#     stmt = select(User).where(User.username == username)
+#     result = await Session.execute(stmt)
+#     user = result.scalar_one_or_none()
+#     if user is None:
+#         return 0
+#     else:
+#         return user.id
 
 
-async def create_many_users(users_data: List[dict]):
-    users_list: List[User] = []
-    for el in users_data:
-        username: String = el.get('username')
-        new_us_id: Integer = await get_userid_from_username(username)
-
-        if new_us_id == 0:
-            users_list.append(
-                User(username=el.get('username'),
-                     email=el.get('email'),
-                     name=el.get('name')
-                     )
-            )
-    if len(users_list) > 0:
+async def create_many_users(users_data: List[User]):
+    if len(users_data) > 0:
         async with async_session_factory() as db_session:
             async with db_session.begin():
-                db_session.add_all(users_list)
+                db_session.add_all(users_data)
 
     return print('!End create_many_users')
 
 
-async def create_many_posts(users_data: List[dict], posts_data: List[dict]):
-    posts_list: List[Post] = []
-    # для каждого словаря (user) из списка users_data
-    # по ключу user_id (=id загрузки) определяем username,
-    # по ранее загруженной в схему таблице находим по username (уникальный)
-    # новое значение ключа ID присвоенное при добавлении записи в таблицу БД
+async def create_many_posts(posts_data: List[Post]):
 
-    for us1 in users_data:
-        us_id: Integer = us1.get('user_id')
-        username: String = us1.get('username')
-        new_us_id: Integer = await get_userid_from_username(username)
-
-        if new_us_id > 0:
-            for el in posts_data:
-                if el.get('user_id') == us_id:
-                    posts_list.append(
-                        Post(
-                             title=el.get('title'),
-                             body=el.get('body'),
-                             user_id=new_us_id,
-                             )
-                    )
-    if len(posts_list) > 0:
+    if len(posts_data) > 0:
         async with async_session_factory() as db_session:
             async with db_session.begin():
-                db_session.add_all(posts_list)
+                db_session.add_all(posts_data)
 
     return print('!End create_many_posts')
 
@@ -125,7 +91,7 @@ async def async_main():
     await async_create()
     users_data, posts_data = await asyncio.gather(fetch_users_data(), fetch_post_data())
     await create_many_users(users_data)
-    await create_many_posts(users_data, posts_data)
+    await create_many_posts(posts_data)
 
 
 def main():

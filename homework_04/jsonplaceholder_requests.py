@@ -14,5 +14,6 @@ async def fetch_json_go(url: str) -> dict:
                 resp = await response.json()
     except ClientResponseError as e:
         print(e.message)
+        raise e
     else:
         return resp
