@@ -1,0 +1,44 @@
+{% extends '/base.html' %}
+
+{% block content %}
+<div>
+    <p class="text_label">
+        Цитаты
+    </p>
+    <div class="container">
+        <ul class="list-group list-group-horizontal">
+          <li class="list-group-item">
+              <button id='u1' type="button" class="btn btn-outline">{{authors[1]}}</button>
+          </li>
+          <li class="list-group-item">
+              <button id='u2' type="button" class="btn btn-outline">{{authors[2]}}</button>
+          </li>
+          <li class="list-group-item">
+              <button id='u3' type="button" class="btn btn-outline">{{authors[3]}}</button>
+          </li>
+        </ul>
+        <hr />
+        <label id="demo" class="form-control" style="min-height:121px">...</label>
+    </div>
+</div>
+<script>
+    let demo_el = document.getElementById('demo')
+    let el1 = document.getElementById('u1')
+    el1.addEventListener('click', function () {
+        let txt = 'Лето — это время года, когда очень жарко, чтобы заниматься вещами, которыми заниматься зимой было очень холодно.'
+        demo_el.textContent=txt + '\n'
+    })
+    let el2 = document.getElementById('u2')
+    el2.addEventListener('click', function () {
+        let txt = 'Август — месяц, когда в автобусе невозможно открыть окно, которое нельзя было закрыть в декабре.'
+        demo_el.textContent=txt + '\n'
+    })
+    let el3 = document.getElementById('u3')
+    el3.addEventListener('click', function () {
+        let txt = 'Ах наше северное лето - карикатура южных зим.'
+        demo_el.textContent=txt + '\n'
+    })
+
+
+</script>
+{% endblock%}

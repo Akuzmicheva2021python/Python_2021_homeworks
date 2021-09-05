@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>
+        {% block title %}
+        Dz-05
+        {% endblock %}
+    </title>
+    <link rel="stylesheet" href="{{url_for('static', filename='/css/bootstrap.min.css')}}">
+
+    <script scr="{{url_for('static', filename='/js/bootstrap.bundle.min.js')}}"></script>
+
+    <script scr="{{url_for('static', filename='/js/bootstrap.bundle.min.js')}}"></script>
+    <style>
+        h3 {
+            background-color: darkseagreen;
+            font-size: 16px;
+            color: darkcyan;
+            margin: 20px;
+            padding: 8px;
+        }
+
+        button {
+            font-size: x-large;
+            color: darkslateblue;
+            padding: 8px;
+        }
+
+        body {
+            font-family: "Balsamiq Sans", cursive;
+        }
+
+        a {
+            text-decoration-line: initial;
+        }
+
+        p {
+            border: 1px solid darkblue;
+            padding: 16px;
+        }
+
+    </style>
+</head>
+<body>
+{% block nav %}
+<h3 id="dz_number">
+    Homework_05
+</h3>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container">
+        <a class="navbar-brand" href="#">
+            <img src="/static/img/emoji-heart-eyes-fill.svg" alt="" width="30" height="24">
+        </a>
+        <button class="navbar-toggler" type="button"
+                data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page"
+                       href="{{url_for('index_app.home')}}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{url_for('index_app.about')}}">About</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+{% endblock %}
+
+{% block content %}
+
+{% endblock%}
+
+</body>
+</html>
